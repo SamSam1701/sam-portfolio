@@ -8,11 +8,13 @@ gsap.registerPlugin(ScrollTrigger);
 const Intro = () => {
   const container = useRef<HTMLDivElement | null>(null);
 
+  console.log("container nef: ", container);
+
   useGSAP(
     () => {
-      let speed = 100;
-      let svg = document.querySelector("svg");
-      let height = svg?.getBBox().height ?? 1000;
+      const speed = 100;
+      const svg = document.querySelector("svg");
+      const height = svg?.getBBox().height ?? 1000;
 
       gsap.set("#h2-1", { opacity: 0 });
       gsap.set("#bg_grad", { attr: { cy: "-50" } });
@@ -25,20 +27,63 @@ const Intro = () => {
       });
 
       /** === SCENE 1 === */
-      let scene1 = gsap.timeline();
+      const scene1 = gsap.timeline();
       ScrollTrigger.create({
         animation: scene1,
-        trigger: container.current, // thay ".scrollElement"
+        trigger: container.current, // thay container.current
         start: "top top",
         end: "45% 100%",
         scrub: 3,
       });
 
-      scene1.to("#h1-1", { y: 3 * speed, x: 1 * speed, scale: 0.9 }, 0);
-      // ... thêm các scene1.to() khác
+      scene1.to(
+        "#h1-1",
+        { y: 3 * speed, x: 1 * speed, scale: 0.9, ease: "power1.in" },
+        0
+      );
+      scene1.to(
+        "#h1-2",
+        { y: 2.6 * speed, x: -0.6 * speed, ease: "power1.in" },
+        0
+      );
+      scene1.to("#h1-3", { y: 1.7 * speed, x: 1.2 * speed }, 0.03);
+      scene1.to("#h1-4", { y: 3 * speed, x: 1 * speed }, 0.03);
+      scene1.to("#h1-5", { y: 2 * speed, x: 1 * speed }, 0.03);
+      scene1.to("#h1-6", { y: 2.3 * speed, x: -2.5 * speed }, 0);
+      scene1.to("#h1-7", { y: 5 * speed, x: 1.6 * speed }, 0);
+      scene1.to("#h1-8", { y: 3.5 * speed, x: 0.2 * speed }, 0);
+      scene1.to("#h1-9", { y: 3.5 * speed, x: -0.2 * speed }, 0);
+      scene1.to("#cloudsBig-L", { y: 4.5 * speed, x: -0.2 * speed }, 0);
+      scene1.to("#cloudsBig-R", { y: 4.5 * speed, x: -0.2 * speed }, 0);
+      scene1.to("#cloudStart-L", { x: -300 }, 0);
+      scene1.to("#cloudStart-R", { x: 300 }, 0);
+      scene1.to("#info", { y: 8 * speed }, 0);
+
+      /*   Bird   */
+      gsap.fromTo(
+        "#bird",
+        { opacity: 1 },
+        {
+          y: -250,
+          x: 800,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: ".scrollElement",
+            start: "15% top",
+            end: "60% 100%",
+            scrub: 4,
+            onEnter: function () {
+              gsap.to("#bird", { scaleX: 1, rotation: 0 });
+            },
+            onLeave: function () {
+              gsap.to("#bird", { scaleX: -1, rotation: -15 });
+            },
+          },
+        }
+      );
 
       /** === Clouds === */
-      let clouds = gsap.timeline();
+      const clouds = gsap.timeline();
       ScrollTrigger.create({
         animation: clouds,
         trigger: container.current,
@@ -53,7 +98,7 @@ const Intro = () => {
       clouds.to("#cloud4", { x: -700, y: 25 }, 0);
 
       /** === Sun motion === */
-      let sun = gsap.timeline();
+      const sun = gsap.timeline();
       ScrollTrigger.create({
         animation: sun,
         trigger: container.current,
@@ -78,10 +123,10 @@ const Intro = () => {
         0
       );
 
-      let scene2 = gsap.timeline();
+      const scene2 = gsap.timeline();
       ScrollTrigger.create({
         animation: scene2,
-        trigger: ".scrollElement",
+        trigger: container.current,
         start: "15% top",
         end: "40% 100%",
         scrub: 3,
@@ -104,13 +149,13 @@ const Intro = () => {
           //transformOrigin: "50% 50%",
           ease: "power3.out",
           scrollTrigger: {
-            trigger: ".scrollElement",
+            trigger: container.current,
             start: "40% top",
             end: "70% 100%",
             scrub: 3,
             onEnter: function () {
               gsap.utils.toArray("#bats path").forEach((item, i) => {
-                gsap.to(item, {
+                gsap.to(item as Element, {
                   scaleX: 0.5,
                   yoyo: true,
                   repeat: 9,
@@ -128,10 +173,10 @@ const Intro = () => {
         }
       );
 
-      let sun2 = gsap.timeline();
+      const sun2 = gsap.timeline();
       ScrollTrigger.create({
         animation: sun2,
-        trigger: ".scrollElement",
+        trigger: container.current,
         start: "2000 top",
         end: "5000 100%",
         scrub: 2,
@@ -157,10 +202,10 @@ const Intro = () => {
       );
 
       gsap.set("#scene3", { y: height - 40, visibility: "visible" });
-      let sceneTransition = gsap.timeline();
+      const sceneTransition = gsap.timeline();
       ScrollTrigger.create({
         animation: sceneTransition,
-        trigger: ".scrollElement",
+        trigger: container.current,
         start: "60% top",
         end: "bottom 100%",
         scrub: 3,
@@ -174,10 +219,10 @@ const Intro = () => {
       sceneTransition.to("#bg_grad", { attr: { cy: "-80" } }, 0.0);
       sceneTransition.to("#bg2", { y: 0 }, 0);
 
-      let scene3 = gsap.timeline();
+      const scene3 = gsap.timeline();
       ScrollTrigger.create({
         animation: scene3,
-        trigger: ".scrollElement",
+        trigger: container.current,
         start: "70% 50%",
         end: "bottom 100%",
         scrub: 3,
@@ -202,10 +247,10 @@ const Intro = () => {
       scene3.to("#bg2-grad", { attr: { r: 500 } }, 0);
 
       gsap.set("#fstar", { y: -400 });
-      let fstarTL = gsap.timeline();
+      const fstarTL = gsap.timeline();
       ScrollTrigger.create({
         animation: fstarTL,
-        trigger: ".scrollElement",
+        trigger: container.current,
         start: "4200 top",
         end: "6000 bottom",
         scrub: 2,
@@ -302,7 +347,7 @@ const Intro = () => {
   ); // scope: để animation chạy trong container
 
   return (
-    <div ref={container} className="scrollElement w-full">
+    <div className="w-full scrollElement" ref={container}>
       <svg
         className="parallax"
         viewBox="0 0 750 500"
@@ -737,28 +782,6 @@ const Intro = () => {
             <circle cx="122.39" cy="60.39" r="1.46" />
           </g>
           <g id="hills3" transform="translate(0, -110)">
-            <g id="info2">
-              <polygon
-                id="arrow2"
-                points="395.5 482.2 393.4 484.3 375.2 466.1 357 484.3 354.9 482.2 375.2 461.9 395.5 482.2"
-                style={{
-                  fill: "#fff",
-                  stroke: "#231f20",
-                  strokeMiterlimit: 10,
-                  strokeWidth: ".5px",
-                }}
-              />
-              <path
-                id="text2"
-                d="m271.8,526.2c8.4,7,22.4-4.5,8.1-9.8-17.8-5.3-3.8-24,9-16.3l-1.1,3.4c-8.6-5.6-19.3,5-5.8,9.5,18.5,6.4,2.2,25.6-11.3,16.7l1.1-3.5Zm40.8,4.2c-23.8,9.7-23.8-30.5,0-21.6l-1,3.3c-17.5-7.5-16.8,23,.1,15.2l.7,3.2Zm4.9-15.1c0-2.7,0-5.1-.2-7.2h3.7v4.5h.3c1.2-3.5,4.3-5.6,7.6-4.9v4c-10-1.9-6.7,14-7.3,19.6h-4.2v-15.9Zm36.1,4.2c0,16.7-23,15.9-22.6.4-.6-16.2,23.2-16.1,22.6-.4Zm-18.4.2c-.3,11.6,14.4,11.7,14.1,0,.6-11.5-14.6-11.7-14.1,0Zm23.7-22.4h4.2v33.9h-4.2v-33.9Zm11.3,0h4.2v33.9h-4.2v-33.9Zm21.6,2.2c10.5-4.2,28.8,5.4,13.7,14.4h0c16.8,8.4-.2,21.4-13.7,17.3v-31.7Zm4.2,13.2c14.5,2.4,13.8-13.7,0-10.4v10.4Zm0,15.4c15.3,3,15.9-14.6,0-12.3v12.3Zm34.4,3.2l-.3-2.9h-.1c-14.1,12.9-22.3-13.8-.2-11.8,1.4-5.4-7.1-7.5-11.3-4.1l-1-2.8c19.1-8.7,16,9.8,16.8,21.6h-3.8Zm-.6-11.8c-7.5-1.9-14.6,7.4-5.8,9.2,5.7-.1,6.2-5.1,5.8-9.2Zm27.3,10.9c-23.8,9.7-23.8-30.5,0-21.6l-1,3.3c-17.5-7.5-16.8,23,.1,15.2l.7,3.2Zm9.1-11.7h0c1.3-1.9,7.3-8.7,8.8-10.6h5.1l-8.9,9.5,10.2,13.6h-5.1l-8-11.1-2.2,2.4v8.7h-4.2v-33.9h4.2v21.4Z"
-                style={{
-                  fill: "#fff",
-                  stroke: "#231f20",
-                  strokeMiterlimit: 10,
-                  strokeWidth: ".5px",
-                }}
-              />
-            </g>
             <polygon
               id="h3-5"
               points="756.3 330.5 750.6 327 742.4 331.1 719.1 317.4 705.9 311.9 695.1 307.3 688 314.2 675.7 336.9 665.3 346.8 657.8 353.1 641.2 353.5 633.5 362.6 626.6 373.1 618.5 378.9 596.8 411.3 588.9 404.9 578.9 406.5 539.9 443.4 472 493.8 556 490.9 756.1 490.9 756.3 330.5"
@@ -938,7 +961,21 @@ const Intro = () => {
           </g>
         </g>
       </svg>
-      <div className="scrollElement"></div>
+      <div className="scrollElement" ref={container}></div>
+      <a
+        href="https://isladjan.com/about/"
+        target="_blank"
+        className="btn btn_works"
+      >
+        My Works
+      </a>
+      <a
+        href="https://isladjan.com/work/2/"
+        target="_blank"
+        className="btn btn_version"
+      >
+        New Version
+      </a>
     </div>
   );
 };
