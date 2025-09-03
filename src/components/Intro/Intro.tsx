@@ -962,20 +962,6 @@ const Intro = () => {
         </g>
       </svg>
       <div className="scrollElement" ref={container}></div>
-      <a
-        href="https://isladjan.com/about/"
-        target="_blank"
-        className="btn btn_works"
-      >
-        My Works
-      </a>
-      <a
-        href="https://isladjan.com/work/2/"
-        target="_blank"
-        className="btn btn_version"
-      >
-        New Version
-      </a>
     </div>
   );
 };

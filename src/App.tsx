@@ -1,11 +1,12 @@
 import { Intro } from "./components/Intro";
+import MainLayout from "./layouts/MainLayout";
 
 function App() {
   return (
-    <>
-      {/* <SplashCursor /> */}
+    <MainLayout>
       <Intro />
-    </>
+      <button>View Detail</button>
+    </MainLayout>
   );
 }
 
